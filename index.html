@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="./css/bootstrap.css" />
+        <link
+            rel="stylesheet"
+            href="https://bootswatch.com/_vendor/bootstrap-icons/font/bootstrap-icons.min.css"
+        />
+        <link
+            rel="stylesheet"
+            href="https://bootswatch.com/_vendor/prismjs/themes/prism-okaidia.css"
+        />
+        <link
+            rel="stylesheet"
+            href="https://bootswatch.com/_assets/css/custom.min.css"
+        />
+        <link rel="stylesheet" href="./css/style.css" />
+        <title>LoRa APRS SQ2CPA Firmware Flasher | SQ2CPA</title>
+    </head>
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 offset-lg-3 col-sm-12">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <h1 class="card-title">LoRa APRS SQ2CPA</h1>
+                            <h3 class="card-title">Firmware flasher</h3>
+                            <div class="my-3">
+                                <label class="form-label">Device Type</label>
+                                <select
+                                    class="form-select"
+                                    disabled=""
+                                    id="device"
+                                >
+                                    <option>Digipeater, IGate</option>
+                                    <option>Tracker</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="board" class="form-label"
+                                    >Board <small>(environment)</small></label
+                                >
+                                <select id="board" class="form-select">
+                                    <option value="ttgo-lora32-v21">
+                                        LoRa32 V2.1/1.6.1 (433MHz)
+                                    </option>
+                                    <option
+                                        value="heltec_wireless_stick_lite_v3"
+                                    >
+                                        Heltec Wireless Stick Lite V3
+                                    </option>
+                                    <option value="heltec_ht-ct62">
+                                        Heltec HT-CT62
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="version" class="form-label"
+                                    >Firmware version</label
+                                >
+                                <select
+                                    id="version"
+                                    class="form-select"
+                                ></select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="type" class="form-label"
+                                    >Type</label
+                                >
+                                <select id="type" class="form-select">
+                                    <option value="factory">
+                                        First flash or Factory reset
+                                        (web_factory.bin)
+                                    </option>
+                                </select>
+                            </div>
+                            <strong
+                                >Do you need help? Check
+                                <a href="#">firmware flashing guide</a>!</strong
+                            >
+                            <div class="mb-4">
+                                <esp-web-install-button
+                                    manifest="/manifest.json"
+                                >
+                                    <button
+                                        slot="activate"
+                                        class="btn btn-success mt-4"
+                                    >
+                                        Flash Firmware
+                                    </button>
+                                    <div
+                                        class="alert alert-dismissible alert-danger mt-4"
+                                        slot="unsupported"
+                                    >
+                                        Your browser does not support installing
+                                        things on ESP devices. Use Google Chrome
+                                        or Microsoft Edge.
+                                    </div>
+                                </esp-web-install-button>
+                            </div>
+                        </div>
+                        <div class="card-footer text-center">
+                            &copy; 2025 SQ2CPA &minus; Made in Poland with
+                            <span style="color: red">&hearts;</span> <br /><img
+                                src="./img/bpr.png"
+                                width="200px;"
+                            />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script
+            type="module"
+            src="https://unpkg.com/esp-web-tools@10/dist/web/install-button.js?module"
+        ></script>
+        <script src="https://bootswatch.com/_vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <script
+            src="https://bootswatch.com/_vendor/prismjs/prism.js"
+            data-manual
+        ></script>
+        <script>
+            function reload() {
+                const button = document.querySelector("esp-web-install-button");
+
+                const device = document.getElementById("device").value;
+                const board = document.getElementById("board").value;
+                const version = document.getElementById("version").value;
+                const type = document.getElementById("type").value;
+
+                if (!device || !board || !version || !type) return;
+
+                const manifest =
+                    "https://firmware.sq2cpa.pl/LoRa_APRS_Digi/" +
+                    version +
+                    "/" +
+                    board +
+                    "/" +
+                    type +
+                    ".json";
+
+                button.manifest = manifest;
+
+                console.log(manifest);
+            }
+
+            async function loadVersions() {
+                const response = await fetch(
+                    "https://firmware.sq2cpa.pl/LoRa_APRS_Digi/versions.json"
+                );
+
+                if (!response.ok) {
+                    alert(
+                        `Failed to load remote versions list. Probably you don't have internet connection!`
+                    );
+                    document.querySelector(
+                        "button[slot=activate]"
+                    ).disabled = true;
+                    return;
+                }
+
+                const versions = await response.json();
+
+                const select = document.getElementById("version");
+
+                versions.forEach((version) => {
+                    const option = document.createElement("option");
+                    option.value = version.key;
+                    option.textContent = `V${version.key} (${version.name})`;
+                    select.appendChild(option);
+                });
+            }
+
+            loadVersions();
+
+            document
+                .getElementById("version")
+                .addEventListener("change", reload);
+            document.getElementById("board").addEventListener("change", reload);
+            document.getElementById("type").addEventListener("change", reload);
+            document.getElementById("board").addEventListener("change", reload);
+
+            reload();
+        </script>
+    </body>
+</html>
