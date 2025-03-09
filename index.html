@@ -177,8 +177,6 @@
                 });
             }
 
-            loadVersions();
-
             document
                 .getElementById("version")
                 .addEventListener("change", reload);
@@ -186,7 +184,11 @@
             document.getElementById("type").addEventListener("change", reload);
             document.getElementById("board").addEventListener("change", reload);
 
-            window.onload = reload;
+            window.onload = function () {
+                loadVersions();
+
+                reload();
+            };
         </script>
     </body>
 </html>
