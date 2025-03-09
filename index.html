@@ -186,7 +186,7 @@
             document.getElementById("type").addEventListener("change", reload);
             document.getElementById("board").addEventListener("change", reload);
 
-            reload();
+            window.onload = reload;
         </script>
     </body>
 </html>
