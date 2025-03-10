@@ -8,5 +8,6 @@
 6. Select your port (check twice if is correct)
 7. You can wipe your device first but that's not required
 8. Don't close, move web flasher page and your device during flashing
+9. After flashing you will see WiFi AP with callsign N0CALL - password: 0123456789
 
 You can't "brick" your device. If flashing failed just check your port try again
