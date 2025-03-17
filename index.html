@@ -29,32 +29,20 @@
                             <h3 class="card-title">Firmware flasher</h3>
                             <div class="my-3">
                                 <label class="form-label">Device Type</label>
-                                <select
-                                    class="form-select"
-                                    disabled=""
-                                    id="device"
-                                >
-                                    <option>Digipeater, IGate</option>
-                                    <option>Tracker</option>
+                                <select class="form-select" id="device">
+                                    <option value="LoRa_APRS_Digi">
+                                        Digipeater, IGate
+                                    </option>
+                                    <option value="LoRa_APRS_Tracker">
+                                        Tracker
+                                    </option>
                                 </select>
                             </div>
                             <div class="mb-3">
                                 <label for="board" class="form-label"
                                     >Board <small>(environment)</small></label
                                 >
-                                <select id="board" class="form-select">
-                                    <option value="ttgo-lora32-v21">
-                                        LoRa32 V2.1/1.6.1 (433MHz)
-                                    </option>
-                                    <option
-                                        value="heltec_wireless_stick_lite_v3"
-                                    >
-                                        Heltec Wireless Stick Lite V3
-                                    </option>
-                                    <option value="heltec_ht-ct62">
-                                        Heltec HT-CT62
-                                    </option>
-                                </select>
+                                <select id="board" class="form-select"></select>
                             </div>
                             <div class="mb-3">
                                 <label for="version" class="form-label"
@@ -142,7 +130,9 @@
                 if (!device || !board || !version || !type) return;
 
                 const manifest =
-                    "https://firmware.sq2cpa.pl/LoRa_APRS_Digi/" +
+                    "https://firmware.sq2cpa.pl/" +
+                    device +
+                    "/" +
                     version +
                     "/" +
                     board +
@@ -156,8 +146,39 @@
             }
 
             async function loadVersions() {
+                const device = document.getElementById("device").value;
+
+                if (device === "LoRa_APRS_Digi") {
+                    document.getElementById("board").innerHTML = `
+<option value="ttgo-lora32-v21">
+    LoRa32 V2.1/1.6.1 (433MHz)
+</option>
+<option value="heltec_wireless_stick_lite_v3">
+    Heltec Wireless Stick Lite V3 (433MHz)
+</option>
+<option value="heltec_ht-ct62">
+    Heltec HT-CT62 (433MHz)
+</option>
+                                    `;
+                } else {
+                    document.getElementById("board").innerHTML = `
+<option value="ttgo-t-beam-v1_2">
+    T-Beam V1.2 SX1278 (433MHz)
+</option>
+<option value="ttgo-t-beam-v1_2_SX1262">
+    T-Beam V1.2 SX1262 (433MHz)
+</option>
+<option value="heltec_wireless_tracker">
+    Heltec Wireless Tracker (433MHz)
+</option>
+<option value="heltec_ht-ct62">
+    Heltec HT-CT62 (433MHz)
+</option>
+                                    `;
+                }
+
                 const response = await fetch(
-                    "https://firmware.sq2cpa.pl/LoRa_APRS_Digi/versions.json"
+                    "https://firmware.sq2cpa.pl/" + device + "/versions.json"
                 );
 
                 if (!response.ok) {
@@ -174,6 +195,8 @@
 
                 const select = document.getElementById("version");
 
+                select.innerHTML = "";
+
                 versions.forEach((version) => {
                     const option = document.createElement("option");
                     option.value = version.key;
@@ -182,6 +205,9 @@
                 });
             }
 
+            document
+                .getElementById("device")
+                .addEventListener("change", loadVersions);
             document
                 .getElementById("version")
                 .addEventListener("change", reload);
