@@ -150,6 +150,8 @@
                 console.log(manifest);
             }
 
+            let isReloaded = false;
+
             async function loadVersions() {
                 const device = document.getElementById("device").value;
 
@@ -208,6 +210,12 @@
                     option.textContent = `V${version.key} (${version.name})`;
                     select.appendChild(option);
                 });
+
+                if (!isReloaded) {
+                    isReloaded = true;
+
+                    reload();
+                }
             }
 
             document
@@ -220,11 +228,7 @@
             document.getElementById("type").addEventListener("change", reload);
             document.getElementById("board").addEventListener("change", reload);
 
-            window.onload = function () {
-                loadVersions();
-
-                reload();
-            };
+            window.onload = loadVersions;
         </script>
     </body>
 </html>
