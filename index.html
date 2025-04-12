@@ -12,6 +12,7 @@
             rel="stylesheet"
             href="https://bootswatch.com/_vendor/prismjs/themes/prism-okaidia.css"
         />
+        <link rel="icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="stylesheet" href="./css/custom.css" />
         <link rel="stylesheet" href="./css/style.css" />
         <title>LoRa APRS SQ2CPA Firmware Flasher | SQ2CPA</title>
@@ -57,13 +58,12 @@
                                 <select id="type" class="form-select">
                                     <option value="factory">
                                         First flash or Factory reset
-                                        (web_factory.bin)
                                     </option>
-                                    <option value="update">
-                                        Update (ota_update.bin) only if you have
+                                    <!-- <option value="update">
+                                        Update - only if you have
                                         this firmware installed (keep the
                                         settings)
-                                    </option>
+                                    </option> -->
                                 </select>
                             </div>
                             <strong
@@ -147,8 +147,6 @@
                 console.log(manifest);
             }
 
-            let isReloaded = false;
-
             async function loadVersions() {
                 const device = document.getElementById("device").value;
 
@@ -162,6 +160,15 @@
 </option>
 <option value="diy_esp32c3-sx1268">
     DIY ESP32C3 + SX1268
+</option>
+<option value="diy_esp32-sx1268">
+    DIY ESP32 + SX1268
+</option>
+<option value="diy_esp32-sx1278">
+    DIY ESP32 + SX1278
+</option>
+<option value="diy_esp32-llcc68">
+    DIY ESP32 + LLCC68
 </option>
 <option value="heltec_ht-ct62">
     Heltec HT-CT62 (433MHz)
@@ -211,11 +218,7 @@
                     select.appendChild(option);
                 });
 
-                if (!isReloaded) {
-                    isReloaded = true;
-
-                    reload();
-                }
+                reload();
             }
 
             document
@@ -224,7 +227,9 @@
             document
                 .getElementById("version")
                 .addEventListener("change", reload);
-            document.getElementById("board").addEventListener("change", reload);
+            document
+                .getElementById("device")
+                .addEventListener("change", reload);
             document.getElementById("type").addEventListener("change", reload);
             document.getElementById("board").addEventListener("change", reload);
 
