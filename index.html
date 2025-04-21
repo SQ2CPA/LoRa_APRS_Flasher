@@ -12,7 +12,7 @@
             rel="stylesheet"
             href="https://bootswatch.com/_vendor/prismjs/themes/prism-okaidia.css"
         />
-        <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/x-icon" href="/img/favicon.ico" />
         <link rel="stylesheet" href="./css/custom.css" />
         <link rel="stylesheet" href="./css/style.css" />
         <title>LoRa APRS SQ2CPA Firmware Flasher | SQ2CPA</title>
@@ -59,41 +59,48 @@
                                     <option value="factory">
                                         First flash or Factory reset
                                     </option>
-                                    <!-- <option value="update">
-                                        Update - only if you have
-                                        this firmware installed (keep the
-                                        settings)
-                                    </option> -->
                                 </select>
                             </div>
-                            <h4>
+                            <h4 class="mt-4">
                                 WiFi AP default password:
                                 <strong>0123456789</strong>
                             </h4>
-                            <br />
-                            <strong
-                                >Do you need help? Check
-                                <a
-                                    href="https://github.com/SQ2CPA/LoRa_APRS_Flasher/blob/master/QUIDE.md"
-                                    >firmware flashing guide</a
-                                ></strong
+
+                            <ul
+                                class="list-unstyled text-start mt-4 mb-4 ps-lg-5 pe-lg-5"
                             >
-                            <br />
-                            <strong
-                                >You want to make DIY board? Check
-                                <a
-                                    href="https://github.com/SQ2CPA/LoRa_APRS_Flasher/tree/master/variants/LoRa_APRS_Digi"
-                                    >available variants</a
-                                ></strong
-                            >
-                            <br />
+                                <li class="mb-2">
+                                    <i class="bi bi-question-circle me-2"></i>
+                                    Do you need help? Check
+                                    <a
+                                        href="https://github.com/SQ2CPA/LoRa_APRS_Flasher/blob/master/QUIDE.md"
+                                        >firmware flashing guide</a
+                                    >
+                                </li>
+                                <li class="mb-2">
+                                    <i class="bi bi-tools me-2"></i> You want to
+                                    make DIY board? Check
+                                    <a
+                                        href="https://github.com/SQ2CPA/LoRa_APRS_Flasher/tree/master/variants"
+                                        >available variants</a
+                                    >
+                                </li>
+                                <li>
+                                    <i class="bi bi-envelope me-2"></i> Having
+                                    issues? Contact:
+                                    <a href="mailto:sq2cpa@gmail.com"
+                                        >sq2cpa@gmail.com</a
+                                    >
+                                </li>
+                            </ul>
+
                             <div class="mb-4">
                                 <esp-web-install-button
                                     manifest="/manifest.json"
                                 >
                                     <button
                                         slot="activate"
-                                        class="btn btn-success mt-4"
+                                        class="btn btn-success"
                                     >
                                         Flash Firmware
                                     </button>
@@ -113,6 +120,7 @@
                             <span style="color: red">&hearts;</span> <br /><img
                                 src="./img/bpr.png"
                                 width="200px;"
+                                class="mt-2"
                             />
                         </div>
                     </div>
@@ -130,6 +138,51 @@
             data-manual
         ></script>
         <script>
+            const digiBoards = [
+                {
+                    value: "ttgo-lora32-v21",
+                    text: "LoRa32 V2.1/1.6.1 (433MHz)",
+                },
+                {
+                    value: "heltec_wireless_stick_lite_v3",
+                    text: "Heltec Wireless Stick Lite V3 (433MHz)",
+                },
+                {
+                    value: "heltec_wifi_lora_32_V3",
+                    text: "Heltec WiFi LoRa 32(V3)",
+                },
+                {
+                    value: "diy_esp32c3-sx1268",
+                    text: "DIY ESP32C3 + SX1268",
+                },
+                { value: "diy_esp32-sx1268", text: "DIY ESP32 + SX1268" },
+                { value: "diy_esp32-sx1278", text: "DIY ESP32 + SX1278" },
+                { value: "diy_esp32-llcc68", text: "DIY ESP32 + LLCC68" },
+                {
+                    value: "heltec_ht-ct62",
+                    text: "Heltec HT-CT62 (433MHz)",
+                },
+            ];
+
+            const trackerBoards = [
+                {
+                    value: "ttgo-t-beam-v1_2",
+                    text: "T-Beam V1.2 SX1278 (433MHz)",
+                },
+                {
+                    value: "ttgo-t-beam-v1_2_SX1262",
+                    text: "T-Beam V1.2 SX1262 (433MHz)",
+                },
+                {
+                    value: "heltec_wireless_tracker",
+                    text: "Heltec Wireless Tracker (433MHz)",
+                },
+                {
+                    value: "heltec_ht-ct62",
+                    text: "Heltec HT-CT62 (433MHz)",
+                },
+            ];
+
             function reload() {
                 const button = document.querySelector("esp-web-install-button");
 
@@ -153,79 +206,64 @@
 
                 button.manifest = manifest;
 
-                console.log(manifest);
+                console.log("Manifest URL:", manifest);
             }
 
             async function loadVersions() {
                 const device = document.getElementById("device").value;
+                const boardSelect = document.getElementById("board");
+                boardSelect.innerHTML = "";
 
-                if (device === "LoRa_APRS_Digi") {
-                    document.getElementById("board").innerHTML = `
-<option value="ttgo-lora32-v21">
-    LoRa32 V2.1/1.6.1 (433MHz)
-</option>
-<option value="heltec_wireless_stick_lite_v3">
-    Heltec Wireless Stick Lite V3 (433MHz)
-</option>
-<option value="diy_esp32c3-sx1268">
-    DIY ESP32C3 + SX1268
-</option>
-<option value="diy_esp32-sx1268">
-    DIY ESP32 + SX1268
-</option>
-<option value="diy_esp32-sx1278">
-    DIY ESP32 + SX1278
-</option>
-<option value="diy_esp32-llcc68">
-    DIY ESP32 + LLCC68
-</option>
-<option value="heltec_ht-ct62">
-    Heltec HT-CT62 (433MHz)
-</option>
-                                    `;
-                } else {
-                    document.getElementById("board").innerHTML = `
-<option value="ttgo-t-beam-v1_2">
-    T-Beam V1.2 SX1278 (433MHz)
-</option>
-<option value="ttgo-t-beam-v1_2_SX1262">
-    T-Beam V1.2 SX1262 (433MHz)
-</option>
-<option value="heltec_wireless_tracker">
-    Heltec Wireless Tracker (433MHz)
-</option>
-<option value="heltec_ht-ct62">
-    Heltec HT-CT62 (433MHz)
-</option>
-                                    `;
-                }
+                const boards =
+                    device === "LoRa_APRS_Digi" ? digiBoards : trackerBoards;
 
-                const response = await fetch(
-                    "https://firmware.sq2cpa.pl/" + device + "/versions.json"
-                );
+                boards.forEach((board) => {
+                    const option = document.createElement("option");
+                    option.value = board.value;
+                    option.textContent = board.text;
+                    boardSelect.appendChild(option);
+                });
 
-                if (!response.ok) {
+                try {
+                    const response = await fetch(
+                        "https://firmware.sq2cpa.pl/" +
+                            device +
+                            "/versions.json"
+                    );
+
+                    if (!response.ok) {
+                        throw new Error(
+                            `HTTP error! status: ${response.status}`
+                        );
+                    }
+
+                    const versions = await response.json();
+                    const versionSelect = document.getElementById("version");
+                    versionSelect.innerHTML = "";
+
+                    versions.forEach((version) => {
+                        const option = document.createElement("option");
+                        option.value = version.key;
+                        option.textContent = `V${version.key} (${version.name})`;
+                        versionSelect.appendChild(option);
+                    });
+
+                    document.querySelector(
+                        "button[slot=activate]"
+                    ).disabled = false;
+                } catch (error) {
+                    console.error(
+                        "Failed to load remote versions list:",
+                        error
+                    );
                     alert(
-                        `Failed to load remote versions list. Probably you don't have internet connection!`
+                        `Failed to load remote versions list. Please check your internet connection or contact support.\nError: ${error.message}`
                     );
                     document.querySelector(
                         "button[slot=activate]"
                     ).disabled = true;
                     return;
                 }
-
-                const versions = await response.json();
-
-                const select = document.getElementById("version");
-
-                select.innerHTML = "";
-
-                versions.forEach((version) => {
-                    const option = document.createElement("option");
-                    option.value = version.key;
-                    option.textContent = `V${version.key} (${version.name})`;
-                    select.appendChild(option);
-                });
 
                 reload();
             }
@@ -236,9 +274,7 @@
             document
                 .getElementById("version")
                 .addEventListener("change", reload);
-            document
-                .getElementById("device")
-                .addEventListener("change", reload);
+
             document.getElementById("type").addEventListener("change", reload);
             document.getElementById("board").addEventListener("change", reload);
 
