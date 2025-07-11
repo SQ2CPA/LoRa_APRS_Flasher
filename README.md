@@ -1,4 +1,6 @@
-# [Launch LoRa APRS Flasher](https://flasher.sq2cpa.pl/)
+<!-- # [Launch LoRa APRS Flasher](https://flasher.sq2cpa.pl/) -->
+
+# [Launch NEW LoRa APRS Flasher](https://flasher.lora-aprs.pl/)
 
 # Issue Reporting for the Flasher
 
