@@ -8,10 +8,6 @@
             rel="stylesheet"
             href="https://bootswatch.com/_vendor/bootstrap-icons/font/bootstrap-icons.min.css"
         />
-        <link
-            rel="stylesheet"
-            href="https://bootswatch.com/_vendor/prismjs/themes/prism-okaidia.css"
-        />
         <link rel="icon" type="image/x-icon" href="/img/favicon.ico" />
         <link rel="stylesheet" href="./css/custom.css" />
         <link rel="stylesheet" href="./css/style.css" />
@@ -23,7 +19,7 @@
         />
         <meta
             property="og:description"
-            content="A web-based firmware flasher for LoRa APRS devices by SQ2CPA. Easily flash Digipeater, IGate, or Tracker firmware onto various ESP32 boards directly from your browser."
+            content="A web-based firmware flasher for LoRa APRS devices by SQ2CPA. This flasher has been moved to a new address."
         />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://flasher.sq2cpa.pl/" />
@@ -38,308 +34,37 @@
                             <h1 class="card-title">LoRa APRS SQ2CPA</h1>
                             <h3 class="card-title">Firmware flasher</h3>
 
-                            <div class="alert alert-info mt-4" role="alert">
+                            <div class="alert alert-success mt-4" role="alert">
                                 <h4 class="alert-heading">
-                                    A New Version of the Flasher is Available!
+                                    This Flasher Has Moved!
                                 </h4>
                                 <p>
-                                    You are invited to use the new, improved
+                                    This web flasher is no longer maintained. I
+                                    have fully migrated to a new, improved
                                     version, which is available at:
+                                    <br />
                                     <a
                                         href="https://flasher.lora-aprs.pl/"
                                         class="alert-link"
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        >flasher.lora-aprs.pl</a
+                                        >https://flasher.lora-aprs.pl/</a
                                     >
                                 </p>
                                 <hr />
                                 <p class="mb-0">
-                                    If the new version works correctly, it will
-                                    soon replace this flasher.
+                                    Please use the new flasher. Thank you!
                                 </p>
-                            </div>
-
-                            <div class="my-3">
-                                <label class="form-label">Device Type</label>
-                                <select class="form-select" id="device">
-                                    <option value="LoRa_APRS_Digi">
-                                        Digipeater, IGate
-                                    </option>
-                                    <option value="LoRa_APRS_Tracker">
-                                        Tracker
-                                    </option>
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <label for="board" class="form-label"
-                                    >Board <small>(environment)</small></label
-                                >
-                                <select id="board" class="form-select"></select>
-                            </div>
-                            <div class="mb-3">
-                                <label for="version" class="form-label"
-                                    >Firmware version</label
-                                >
-                                <select
-                                    id="version"
-                                    class="form-select"
-                                ></select>
-                            </div>
-                            <div class="mb-3">
-                                <label for="type" class="form-label"
-                                    >Type</label
-                                >
-                                <select id="type" class="form-select">
-                                    <option value="factory">
-                                        First flash or Factory reset
-                                    </option>
-                                </select>
-                            </div>
-                            <h4 class="mt-4">
-                                WiFi AP default password:
-                                <strong>0123456789</strong>
-                            </h4>
-
-                            <ul
-                                class="list-unstyled text-start mt-4 mb-4 ps-lg-5 pe-lg-5"
-                            >
-                                <li class="mb-2">
-                                    <i class="bi bi-question-circle me-2"></i>
-                                    Do you need help? Check
-                                    <a
-                                        href="https://github.com/SQ2CPA/LoRa_APRS_Flasher/blob/master/QUIDE.md"
-                                        >firmware flashing guide</a
-                                    >
-                                </li>
-                                <li class="mb-2">
-                                    <i class="bi bi-cloud-arrow-down me-2"></i>
-                                    Do you want to OTA update? Check
-                                    <a
-                                        href="https://github.com/SQ2CPA/LoRa_APRS_Flasher/blob/master/OTA.md"
-                                        >OTA guide</a
-                                    >
-                                </li>
-                                <li class="mb-2">
-                                    <i class="bi bi-tools me-2"></i> You want to
-                                    make DIY board? Check
-                                    <a
-                                        href="https://github.com/SQ2CPA/LoRa_APRS_Flasher/tree/master/variants"
-                                        >available variants</a
-                                    >
-                                </li>
-                                <li class="mb-2">
-                                    <i class="bi bi-github me-2"></i>
-                                    Having issues? Report them on GitHub:
-                                    <br />
-                                    <a
-                                        href="https://github.com/SQ2CPA/LoRa_APRS_Digi/issues"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        >Digi/IGate Issues</a
-                                    >
-                                    or
-                                    <a
-                                        href="https://github.com/SQ2CPA/LoRa_APRS_Tracker/issues"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        >Tracker Issues</a
-                                    >
-                                </li>
-                            </ul>
-
-                            <div class="mb-4">
-                                <esp-web-install-button
-                                    manifest="/manifest.json"
-                                >
-                                    <button
-                                        slot="activate"
-                                        class="btn btn-success"
-                                    >
-                                        Flash Firmware
-                                    </button>
-                                    <div
-                                        class="alert alert-dismissible alert-danger mt-4"
-                                        slot="unsupported"
-                                    >
-                                        Your browser does not support installing
-                                        things on ESP devices. Use Google Chrome
-                                        or Microsoft Edge.
-                                    </div>
-                                </esp-web-install-button>
                             </div>
                         </div>
                         <div class="card-footer text-center">
                             &copy; 2025 SQ2CPA &minus; Made in Poland with
-                            <span style="color: red">&hearts;</span> <br /><img
-                                src="./img/bpr.png"
-                                width="200px;"
-                                class="mt-2"
-                            />
+                            <span style="color: red">&hearts;</span>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
-        <script
-            type="module"
-            src="https://unpkg.com/esp-web-tools@10/dist/web/install-button.js?module"
-        ></script>
         <script src="https://bootswatch.com/_vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-        <script
-            src="https://bootswatch.com/_vendor/prismjs/prism.js"
-            data-manual
-        ></script>
-        <script>
-            const digiBoards = [
-                {
-                    value: "ttgo-lora32-v21",
-                    text: "LoRa32 V2.1/1.6.1 (433MHz)",
-                },
-                {
-                    value: "heltec_wireless_stick_lite_v3",
-                    text: "Heltec Wireless Stick Lite V3 (433MHz)",
-                },
-                {
-                    value: "heltec_wifi_lora_32_V3",
-                    text: "Heltec WiFi LoRa 32(V3)",
-                },
-                {
-                    value: "diy_esp32c3-sx1268",
-                    text: "DIY ESP32C3 + SX1268",
-                },
-                { value: "diy_esp32-sx1268", text: "DIY ESP32 + SX1268" },
-                { value: "diy_esp32-sx1278", text: "DIY ESP32 + SX1278" },
-                { value: "diy_esp32-llcc68", text: "DIY ESP32 + LLCC68" },
-                {
-                    value: "heltec_ht-ct62",
-                    text: "Heltec HT-CT62 (433MHz)",
-                },
-            ];
-
-            const trackerBoards = [
-                {
-                    value: "ttgo-t-beam-v1_0",
-                    text: "T-Beam V1.0 SX1278 (433MHz)",
-                },
-                {
-                    value: "ttgo-t-beam-v1_2",
-                    text: "T-Beam V1.2 SX1278 (433MHz)",
-                },
-                {
-                    value: "ttgo-t-beam-v1_2_SX1262",
-                    text: "T-Beam V1.2 SX1262 (433MHz)",
-                },
-                {
-                    value: "heltec_wireless_tracker",
-                    text: "Heltec Wireless Tracker (433MHz)",
-                },
-                { value: "diy_esp32-sx1268", text: "DIY ESP32 + SX1268" },
-                { value: "diy_esp32-sx1278", text: "DIY ESP32 + SX1278" },
-                { value: "diy_esp32-llcc68", text: "DIY ESP32 + LLCC68" },
-                {
-                    value: "heltec_ht-ct62",
-                    text: "Heltec HT-CT62 (433MHz)",
-                },
-            ];
-
-            function reload() {
-                const button = document.querySelector("esp-web-install-button");
-
-                const device = document.getElementById("device").value;
-                const board = document.getElementById("board").value;
-                const version = document.getElementById("version").value;
-                const type = document.getElementById("type").value;
-
-                if (!device || !board || !version || !type) return;
-
-                const manifest =
-                    "https://firmware.sq2cpa.pl/" +
-                    device +
-                    "/" +
-                    version +
-                    "/" +
-                    board +
-                    "/" +
-                    type +
-                    ".json";
-
-                button.manifest = manifest;
-
-                console.log("Manifest URL:", manifest);
-            }
-
-            async function loadVersions() {
-                const device = document.getElementById("device").value;
-                const boardSelect = document.getElementById("board");
-                boardSelect.innerHTML = "";
-
-                const boards =
-                    device === "LoRa_APRS_Digi" ? digiBoards : trackerBoards;
-
-                boards.forEach((board) => {
-                    const option = document.createElement("option");
-                    option.value = board.value;
-                    option.textContent = board.text;
-                    boardSelect.appendChild(option);
-                });
-
-                try {
-                    const response = await fetch(
-                        "https://firmware.sq2cpa.pl/" +
-                            device +
-                            "/versions.json"
-                    );
-
-                    if (!response.ok) {
-                        throw new Error(
-                            `HTTP error! status: ${response.status}`
-                        );
-                    }
-
-                    const versions = await response.json();
-                    const versionSelect = document.getElementById("version");
-                    versionSelect.innerHTML = "";
-
-                    versions.forEach((version) => {
-                        const option = document.createElement("option");
-                        option.value = version.key;
-                        option.textContent = `V${version.key} (${version.name})`;
-                        versionSelect.appendChild(option);
-                    });
-
-                    document.querySelector(
-                        "button[slot=activate]"
-                    ).disabled = false;
-                } catch (error) {
-                    console.error(
-                        "Failed to load remote versions list:",
-                        error
-                    );
-                    alert(
-                        `Failed to load remote versions list. Please check your internet connection or contact support.\nError: ${error.message}`
-                    );
-                    document.querySelector(
-                        "button[slot=activate]"
-                    ).disabled = true;
-                    return;
-                }
-
-                reload();
-            }
-
-            document
-                .getElementById("device")
-                .addEventListener("change", loadVersions);
-            document
-                .getElementById("version")
-                .addEventListener("change", reload);
-
-            document.getElementById("type").addEventListener("change", reload);
-            document.getElementById("board").addEventListener("change", reload);
-
-            window.onload = loadVersions;
-        </script>
     </body>
 </html>
